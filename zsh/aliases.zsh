@@ -14,4 +14,4 @@ alias ee="subl"
 alias af="alias | grep" #find an alias
 alias cl="clear"
 alias cdot="cd ~/.dotfiles"
-alias adt="cat << EOF >>" #add text
+alias py=python3
