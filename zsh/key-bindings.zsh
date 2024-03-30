@@ -16,4 +16,6 @@ __open_in_editor(){
 zle -N __open_in_editor
  
 # bind keys to widgets
-bindkey -M emacs '^u' __open_in_editor
+bindkey -M viins '^u' __open_in_editor
+#bindkey -M vicmd '^u' __open_in_editor
+bindkey -M viins '^f' vi-cmd-mode 

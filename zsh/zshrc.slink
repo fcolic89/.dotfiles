@@ -16,7 +16,7 @@ else
 EOF
 fi
 
-plugins=(git-prompt fzf zsh-syntax-highlighting mise)
+plugins=(git-prompt fzf vi-mode zsh-syntax-highlighting mise)
 
 source $ZSH/oh-my-zsh.sh
 
