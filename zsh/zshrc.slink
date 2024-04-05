@@ -6,17 +6,9 @@ DOTFILES="$HOME/.dotfiles"
 ZSH_THEME="attempt"
 
 # Load mise
-if [ -f "$HOME/.local/bin/mise" ]; then
-  eval "$($HOME/.local/bin/mise activate zsh)"
-else
-  cat << EOF
-  Mise not installed. Run this command to install:
+[ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
 
-     curl https://mise.run | sh
-EOF
-fi
-
-plugins=(git-prompt fzf vi-mode zsh-syntax-highlighting mise)
+plugins=(git-prompt fzf vi-mode zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
