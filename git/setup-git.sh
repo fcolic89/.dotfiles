@@ -1,80 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eo pipefail
+if [ $(command -v "git") ]; then
+  echo "Git is required to run this script!"
+  return 1 2> /dev/null || exit 1
+fi
 
-#Variables
-script_name="SETUP-GIT.SH"
-color='\033[0;33m' #yellow
-nocolor='\033[0m' # No Color
-result=-2
+printf "Enter git username: "
+read username
+printf "Enter git email: "
+read email
 
-info() {
-    echo -e "$color$1$nocolor"
-}
+command git config --global user.name $username
+command git config --global user.email $email
 
-set_name_email(){
-  while true; do
-    info "What is your git username?"
-    read name
-    if [ -z "$name" ]; then
-      info "Name cannot be empty..."
-    else
-      break
-    fi
-  done
+if [ $(command -v "nvim") ]; then
+  command git config --global core.editor nvim
+elif [ $(command -v "vim") ]; then
+  command git config --global core.editor vim
+fi
 
-  while true; do
-    info "What is your git email?"
-    read email
-    if [ -z "$email" ]; then
-      info "Email cannot be empty..."
-    else
-      break
-    fi
-  done
-}
+command git config --global init.defaultBranch main
 
-confirm_name_email(){
-  info "\nConfirm username and email:"
-  echo "-- username: $name"
-  echo "-- email: $email"
-  info "\n--to confirm type y\n--to restart type r\n--to abort type a"
-  read input
+mkdir -p $HOME/.ssh
+ssh-keygen -t ed25519 -C "$email" -f $HOME/.ssh/github-key
 
-  if [[ "$input" == "y" ]]; then
-    result=1
-  elif [[ "$input" == "r" ]]; then
-    result=2
-  elif [[ "$input" == "a" ]]; then
-    result=-1
-  else
-    result=0
-  fi
-}
-
-while true; do
-  set_name_email
-  confirm_name_email
-
-  if [[ $result == 1 ]]; then
-    info "Working..."
-
-    git config --global user.name $name
-    git config --global user.email $email
-    git config --global core.editor vim
-
-    info "Done"
-    break
-  elif [[ $result == 2 ]]; then
-    continue
-  elif [[ $result == -1 ]]; then
-    info "Aborting..."
-    break
-  else
-    info "Error. Aborting..."
-    break
-  fi
-done
-
-echo "Press RETURN to exit..."
-read
+eval "$(ssh-agent -s)" > /dev/null
+ssh-add $HOME/.ssh/github-key
