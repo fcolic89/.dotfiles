@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ $(command -v "git") ]; then
+if [ ! $(command -v "git") ]; then
   echo "Git is required to run this script!"
   return 1 2> /dev/null || exit 1
 fi
