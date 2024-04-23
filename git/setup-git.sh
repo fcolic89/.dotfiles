@@ -21,7 +21,7 @@ fi
 
 command git config --global init.defaultBranch main
 command git config --global column.ui auto
-command git config --global branch.sort -comitterdate
+command git config --global branch.sort -committerdate
 
 mkdir -p $HOME/.ssh
 ssh-keygen -t ed25519 -C "$email" -f $HOME/.ssh/github-key
