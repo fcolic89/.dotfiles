@@ -1,0 +1,27 @@
+let mapleader = " "
+
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :q!<CR>
+nnoremap <leader><leader> <C-^>
+
+nnoremap <C-h>  <C-w>h
+nnoremap <C-j>  <C-w>j
+nnoremap <C-k>  <C-w>k
+nnoremap <C-l>  <C-w>l
+
+nnoremap = :tabnext<CR>
+nnoremap - :tabprev<CR>\
+
+inoremap <C-f> <Esc>
+nnoremap <C-f> <Esc>
+vnoremap <C-f> <Esc>
+
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap gcc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap <leader>l :action FindInPath<CR>
+nnoremap <leader>f :action GotoFile <CR>
