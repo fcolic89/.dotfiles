@@ -1,21 +1,64 @@
-#stops a one or all docker containers
+#a menu for selecting container ids using fzf
+function _fzf_container_menu(){
+  if [ ! $(command -v "fzf") ]; then
+    printf "Error: fzf needs to be installed to use this function.(https://github.com/junegunn/fzf)\n" >&2
+    return 1
+  fi
+  local options
+  if [ "$1" = "exited" ]; then
+    options=$(command docker ps -f "status=exited" | command awk 'NR > 1 {print $1, $2, $NF}')
+  else
+    options=$(command docker ps | command awk 'NR > 1 {print $1, $2, $NF}')
+  fi
+  local selected_ids=$(command echo "${options[@]}" | command fzf --multi --header=$'CONTAINER ID  IMAGE  NAME\n' --layout=reverse --prompt="Select a container: " | command awk '{print $3}')
+  echo $selected_ids
+}
+
+#stops containers
 function dstop(){
   if [ "$1" = "-a" ]; then
     command docker container stop $(command docker ps -q)
   elif [ -n "$1" ]; then
     command docker container stop "$1"
   else
-    if [ ! $(command -v "fzf") ]; then
-      echo "Error: fzf needs to be installed to use this function.(https://github.com/junegunn/fzf)"
-      return 1
-    fi
-    local options=$(command docker ps | command awk 'NR > 1 {print $1, $2, $NF}')
-    local selected_option=$(command echo "${options[@]}" | command fzf --header=$'CONTAINER ID  IMAGE  NAME\n' --layout=reverse --prompt="Select a container: ")
-    command docker container stop $(echo $selected_option | command awk '{print $3}')
+    selected_ids=$(_fzf_container_menu)
+    [ $? -ne 0 ] && return 1
+
+    echo $selected_ids | xargs docker container stop 
   fi 
 }
 
-#remove one or all docker images
+#removes containers
+function drm(){
+  if [ "$1" = "-a" ]; then
+    docker rm $(docker ps -aq)
+  elif [ -n "$1" ]; then
+    docker rm "$1"
+  else
+    selected_ids=$(_fzf_container_menu "exited")
+    [ $? -ne 0 ] && return 1
+
+    echo $selected_ids | xargs docker container rm
+  fi
+}
+
+#stop and remove containers
+function dsnr(){
+  selected_ids=$(_fzf_container_menu)
+  [ $? -ne 0 ] && return 1
+
+  echo $selected_ids | xargs docker container stop | xargs docker container rm
+}
+
+#select a container to execute /bin/bash
+function dbash(){
+  selected_id=$(_fzf_container_menu)
+  [ $? -ne 0 ] && return 1
+
+  command docker exec -it $selected_id /bin/bash $@
+}
+
+#remove docker images
 function drmi(){
   if [ "$1" = "-a" ]; then
     docker rmi $(docker images -q)
@@ -27,25 +70,8 @@ function drmi(){
       return 1
     fi
     local options=$(command docker images | command awk 'NR > 1 {print $1, $2, $3}')
-    local selected_option=$(command echo "${options[@]}" | command fzf --header=$'REPOSITORY  TAG  IMAGE ID\n' --layout=reverse --prompt="Select an image: ")
-    command docker rmi $(echo $selected_option | command awk '{print $3}')
-  fi
-}
-
-#removes one or all docker container
-function drm(){
-  if [ "$1" = "-a" ]; then
-    docker rm $(docker ps -aq)
-  elif [ -n "$1" ]; then
-    docker rm "$1"
-  else
-    if [ ! $(command -v "fzf") ]; then
-      echo "Error: fzf needs to be installed to use this function.(https://github.com/junegunn/fzf)"
-      return 1
-    fi
-    local options=$(command docker ps -f "status=exited" | command awk 'NR > 1 {print $1, $2, $NF}')
-    local selected_option=$(command echo "${options[@]}" | command fzf --header=$'CONTAINER ID  IMAGE  NAME\n' --layout=reverse --prompt="Select an image: ")
-    command docker rm $(echo $selected_option | command awk '{print $3}')
+    local selected_option=$(command echo "${options[@]}" | command fzf -- multi --header=$'REPOSITORY  TAG  IMAGE ID\n' --layout=reverse --prompt="Select an image: ")
+    echo $selected_option | command awk '{print $3}' | xargs docker rmi
   fi
 }
 
@@ -59,15 +85,4 @@ function dcu(){
   else
     echo "An error occurred while trying to call docker compose up!"
   fi
-}
-
-#a function for interactive selection of a container that will execute /bin/bash
-function dbash(){
-  if [ ! $(command -v "fzf") ]; then
-    echo "Error: fzf needs to be installed to use this function.(https://github.com/junegunn/fzf)"
-    return 1
-  fi
-  local options=$(command docker ps | command awk 'NR > 1 {print $1, $2, $NF}')
-  local selected_option=$(command echo "${options[@]}" | command fzf --header=$'CONTAINER ID  IMAGE  NAME\n' --layout=reverse --prompt="Select a container: ")
-  command docker exec -it $(command echo $selected_option | command awk '{print $3}') /bin/bash $@
 }
