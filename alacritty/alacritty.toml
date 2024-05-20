@@ -1,0 +1,40 @@
+[font] 
+size = 11
+normal = {family = "JetBrains Mono", style = "Regular"}
+bold = {family = "JetBrains Mono", style = "Bold"}
+italic = {family = "JetBrains Mono", style = "Italic"}
+bold_italic = {family = "JetBrains Mono", style = "Bold Italic"}
+
+[shell]
+program = "/bin/zsh"
+args = ["-c", "tmux new-session -A -s main"]
+
+[window]
+decorations = "Full"
+startup_mode = "Maximized"
+
+# [bell]
+# animation = "EaseOut"
+# duration = 130
+# color = "#1c1c1c"
+
+[mouse]
+hide_when_typing = true
+
+[colors.primary]
+background = "#000000"
+
+[colors.cursor]
+text = "0x0d1117"
+cursor = "0xc9d1d9"
+
+[colors.normal]
+black = "0x26271A"
+red = "0xb46958"
+green = "0x90A959"
+yellow = "0xF4BF75"
+blue = "0xBAD7FF"
+magenta = "0xAA759F"
+cyan = "0x88afa2"
+white = "0x000000"
+# white = "0xE1E1E1"
