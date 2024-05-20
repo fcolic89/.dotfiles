@@ -1,5 +1,8 @@
 let mapleader = " "
 
+set relativenumber
+set number
+
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>Q :q!<CR>
@@ -10,8 +13,8 @@ nnoremap <C-j>  <C-w>j
 nnoremap <C-k>  <C-w>k
 nnoremap <C-l>  <C-w>l
 
-nnoremap = :tabnext<CR>
-nnoremap - :tabprev<CR>\
+nnoremap ] :tabnext<CR>
+nnoremap [ :tabprev<CR>
 
 inoremap <C-f> <Esc>
 nnoremap <C-f> <Esc>
