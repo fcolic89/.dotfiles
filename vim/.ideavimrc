@@ -28,3 +28,5 @@ vnoremap gc :action CommentByLineComment<CR>
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap <leader>l :action FindInPath<CR>
 nnoremap <leader>f :action GotoFile <CR>
+
+Plug 'preservim/nerdtree'
