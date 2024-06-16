@@ -1,32 +1,67 @@
 let mapleader = " "
 
+" vim settings
 set relativenumber
 set number
+set clipboard=unnamedplus
+
+" ideavim settings
+" set ideamarks
+
+" plugins
+Plug 'preservim/nerdtree'
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>Q :q!<CR>
-nnoremap <leader><leader> <C-^>
 
-nnoremap <C-h>  <C-w>h
-nnoremap <C-j>  <C-w>j
-nnoremap <C-k>  <C-w>k
-nnoremap <C-l>  <C-w>l
-
-nnoremap ] :tabnext<CR>
-nnoremap [ :tabprev<CR>
-
+" Ctrl+f for Escape
 inoremap <C-f> <Esc>
 nnoremap <C-f> <Esc>
 vnoremap <C-f> <Esc>
 
+" tab and pane movements
+nnoremap <leader><leader> <C-^>
+nnoremap <C-h>  <C-w>h
+nnoremap <C-j>  <C-w>j
+nnoremap <C-k>  <C-w>k
+nnoremap <C-l>  <C-w>l
+nnoremap = :tabnext<CR>
+nnoremap - :tabprev<CR>
+
+" code indentation and commenting
 vnoremap < <gv
 vnoremap > >gv
-
 nnoremap gcc :action CommentByLineComment<CR>
 vnoremap gc :action CommentByLineComment<CR>
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap <leader>l :action FindInPath<CR>
-nnoremap <leader>f :action GotoFile <CR>
 
-Plug 'preservim/nerdtree'
+" move by function
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+" goto
+nnoremap gb :action Back<CR>
+nnoremap gf :action Forward<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+
+" find and goto file
+nnoremap <leader>u :action FindUsages<CR>
+nnoremap <leader>s :action ShowUsages<CR>
+nnoremap <leader>l :action FindInPath<CR>
+nnoremap <leader>f :action GotoFile<CR>
+
+" run
+nnoremap <leader>rc :action ContextRun<CR>
+nnoremap <leader>rx :action ChooseRunConfiguration<CR>
+nnoremap <leader>rr :action Rerun<CR>
+nnoremap <leader>rt :action RunTests<CR>
+nnoremap <leader>rs :action Stop<CR>
+
+" context actions
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+
+"zen
+nnoremap <leader>z :action ToggleZenMode<CR>
