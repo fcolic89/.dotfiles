@@ -4,6 +4,10 @@ let mapleader = " "
 set relativenumber
 set number
 set clipboard=unnamedplus
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
 
 " ideavim settings
 " set ideamarks
@@ -26,8 +30,8 @@ nnoremap <C-h>  <C-w>h
 nnoremap <C-j>  <C-w>j
 nnoremap <C-k>  <C-w>k
 nnoremap <C-l>  <C-w>l
-nnoremap = :tabnext<CR>
-nnoremap - :tabprev<CR>
+nnoremap <A-n> :tabnext<CR>
+nnoremap <A-p> :tabprev<CR>
 
 " code indentation and commenting
 vnoremap < <gv
@@ -63,5 +67,8 @@ nnoremap <leader>rs :action Stop<CR>
 " context actions
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 
-"zen
+" select all occurrences
+nnoremap <leader>rp :action SelectAllOccurrences<CR>
+
+" zen
 nnoremap <leader>z :action ToggleZenMode<CR>
