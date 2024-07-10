@@ -70,7 +70,7 @@ function drmi(){
       return 1
     fi
     local options=$(command docker images | command awk 'NR > 1 {print $1, $2, $3}')
-    local selected_option=$(command echo "${options[@]}" | command fzf -- multi --header=$'REPOSITORY  TAG  IMAGE ID\n' --layout=reverse --prompt="Select an image: ")
+    local selected_option=$(command echo "${options[@]}" | command fzf --multi --header=$'REPOSITORY  TAG  IMAGE ID\n' --layout=reverse --prompt="Select an image: ")
     echo $selected_option | command awk '{print $3}' | xargs docker rmi
   fi
 }
