@@ -13,6 +13,10 @@ if [ $(command -v "apt") ]; then
   alias acp="apt-cache policy"
 fi
 
+if [ $(command -v "mvn") ]; then
+  alias jcp="mvn archetype:generate -DarchetypeArtifactId=maven-archetype-boilerplate -DarchetypeGroupId=com.boilerplate"
+fi
+
 alias mv="mv -i"
 alias cp="cp -i"
 alias cl="clear"
