@@ -68,7 +68,19 @@ nnoremap <leader>rs :action Stop<CR>
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 
 " select all occurrences
-nnoremap <leader>rp :action SelectAllOccurrences<CR>
+nnoremap <leader>so :action SelectAllOccurrences<CR>
+
+" rename an element
+nnoremap <leader>re :action RenameElement<CR>
+
+" turn on action id display
+nnoremap <leader>ad :action VimFindActionIdAction<CR>
+
+" nerdtree mappings
+nnoremap <leader>e :NERDTreeFocus<CR>
+
+" git
+nnoremap <leader>gd :action Compare.SameVersion<CR>
 
 " zen
 nnoremap <leader>z :action ToggleZenMode<CR>
