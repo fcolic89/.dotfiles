@@ -82,5 +82,14 @@ nnoremap <leader>e :NERDTreeFocus<CR>
 " git
 nnoremap <leader>gd :action Compare.SameVersion<CR>
 
+" close all other tabs
+nnoremap <leader>cot :action CloseAllEditorsButActive<CR>
+
+" reformat file
+nnoremap <leader>rf :action ShowReformatFileDialog<CR>
+
+" open ~/.ideavimrc
+nnoremap <leader>oi :e ~/.ideavimrc<CR>
+
 " zen
 nnoremap <leader>z :action ToggleZenMode<CR>
