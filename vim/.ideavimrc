@@ -37,7 +37,7 @@ nnoremap <A-p> :tabprev<CR>
 vnoremap < <gv
 vnoremap > >gv
 nnoremap gcc :action CommentByLineComment<CR>
-vnoremap gc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR><Esc>
 
 " move by function
 nnoremap [[ :action MethodUp<CR>
