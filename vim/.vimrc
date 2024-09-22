@@ -30,14 +30,11 @@ nnoremap <leader>Q :q!<CR>
 
 " buffers
 nnoremap <leader>e :Ex<CR>
-nnoremap <leader>s :Sex<CR>
-nnoremap <leader>l :Vex<CR>
 nnoremap <leader>k :ls<CR>
-nnoremap <C-\> :vsplit<CR>
 nnoremap <leader>f :b 
 nnoremap <leader>c :bdelete<CR> 
-nnoremap ] :bnext<CR>
-nnoremap [ :bprev<CR>
+nnoremap <Esc>n :bnext<CR>
+nnoremap <Esc>p :bprev<CR>
 
 " tabs
 " if <bar> is not working try |
