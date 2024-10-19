@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# test commit
 name="SETUP.SH"
 github_repo="https://github.com/fcolic89/.dotfiles"
 install_dir="$HOME/.dotfiles"
