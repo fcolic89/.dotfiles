@@ -91,5 +91,14 @@ nnoremap <leader>rf :action ShowReformatFileDialog<CR>
 " open ~/.ideavimrc
 nnoremap <leader>oi :e ~/.ideavimrc<CR>
 
+" open terminal window
+nnoremap <leader>tw :action ActivateTerminalToolWindow<CR>
+
 " zen
 nnoremap <leader>z :action ToggleZenMode<CR>
+
+" select all
+nnoremap <leader>sa ggVG<CR>
+
+" search for selected text in file
+vnoremap <leader>st "ay/<C-r>a<CR>
