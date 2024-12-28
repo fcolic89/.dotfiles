@@ -1,7 +1,7 @@
 let mapleader = " "
 
 " vim settings
-set relativenumber
+" set relativenumber
 set number
 set clipboard=unnamedplus
 set ignorecase
