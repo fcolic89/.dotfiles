@@ -1,1 +1,2 @@
 export MOZ_ENABLE_WAYLAND=1
+export FZF_DEFAULT_COMMAND="fdfind . --hidden --exclude {.git, node_modules}"

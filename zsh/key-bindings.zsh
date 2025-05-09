@@ -1,16 +1,20 @@
 __open_in_editor(){
-  local option=$(command find . -not -path '*/node_modules*' -not -path '*.git*' | command fzf --reverse)
+  if [ -z "$EDITOR" ]; then
+   zle -M "Error: cannot open file, no default editor set!" && return 1
+  fi
+
+  local option=$(command fdfind --exclude node_modules | command fzf --reverse)
   if [ -n "$option" ]; then
-    local option_path=$(command realpath $option || command readlink -f $option)
+    local option_path="$(pwd)/$option"
     case "$EDITOR" in
-      "nvim")
+      nvim)
         if [ -f "$option_path" ]; then
           $EDITOR -c "cd $(command dirname $option_path)" $option_path
         else
           $EDITOR -c "cd $option_path" $option_path
         fi
         ;;
-      "vim")
+      vim)
         if [ -f "$option_path" ]; then
           echo $option_path | xargs -o $EDITOR -c "cd $(command dirname $option_path)"
         else
