@@ -45,6 +45,7 @@ install_programs() {
     fzf
     ranger
     ripgrep
+    fd-find
   )
 
   info_message "Installing programs"
