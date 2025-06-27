@@ -72,7 +72,7 @@ install_ohmyzsh() {
   fi
 
   info_message "Installing syntax highlighting plugin"
-  command git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" 2>/dev/null
+  command git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" 2>/dev/null
 
   info_message "Installing custom theme"
   local custom_theme="attempt"
