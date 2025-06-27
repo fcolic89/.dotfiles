@@ -5,7 +5,7 @@ bold = {family = "JetBrains Mono", style = "Bold"}
 italic = {family = "JetBrains Mono", style = "Italic"}
 bold_italic = {family = "JetBrains Mono", style = "Bold Italic"}
 
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 args = ["-c", "tmux new-session -A -s main"]
 
