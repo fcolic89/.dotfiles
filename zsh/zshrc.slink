@@ -8,9 +8,10 @@ ZSH_THEME="attempt"
 # Load mise
 [ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
 
-plugins=(git-prompt fzf vi-mode zsh-syntax-highlighting)
+plugins=(git-prompt vi-mode zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+source $DOTFILES/misc/ssh-agent.sh
 
 # Source .zsh files
 for src in $(find -H "$DOTFILES" -maxdepth 2 -name "*.zsh")
