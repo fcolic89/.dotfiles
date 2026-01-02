@@ -46,6 +46,7 @@ install_programs() {
     ranger
     ripgrep
     fd-find
+    zsh-syntax-highlighting
   )
 
   info_message "Installing programs"
@@ -60,23 +61,6 @@ install_programs() {
   else
     error_message "No known way of installing programs"
   fi
-}
-
-install_ohmyzsh() {
-  if [ -d "$HOME/.oh-my-zsh" ]; then
-    info_message "Oh-my-zsh is already inslled, trying to update"
-    omz update >/dev/null
-  else
-    info_message "Installing oh-my-zsh"
-    exit | sh -c "$(command curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" >/dev/null
-  fi
-
-  info_message "Installing syntax highlighting plugin"
-  command git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" 2>/dev/null
-
-  info_message "Installing custom theme"
-  local custom_theme="attempt"
-  command ln -sfv "$install_dir/themes/$custom_theme.zsh-theme" "$HOME/.oh-my-zsh/custom/themes"
 }
 
 switch_git_branch() {
@@ -122,9 +106,7 @@ install() {
   backup_files
   get_dotfiles_from_git
   install_programs
-  install_ohmyzsh
   link_dotfiles
-  source "$install_dir/misc/extended-setup.sh"
 }
 
 install

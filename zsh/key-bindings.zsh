@@ -35,5 +35,14 @@ zle -N __open_in_editor
  
 # bind keys to widgets
 bindkey -M viins '^u' __open_in_editor
+
 #bindkey -M vicmd '^u' __open_in_editor
 bindkey -M viins '^f' vi-cmd-mode 
+
+# open buffer line in editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
+# shift-tab for selecting previous completion item 
+bindkey '^[[Z' reverse-menu-complete
