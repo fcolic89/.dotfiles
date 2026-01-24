@@ -2,6 +2,7 @@
 ## Recommended fonts:
 - [Meslo Nerd Font](https://github.com/romkatv/powerlevel10k/blob/master/font.md)
 - [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
+- [Commit Mono](https://github.com/eigilnikolajsen/commit-mono)
 
 ## Install
 ```sh
