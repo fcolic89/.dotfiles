@@ -50,7 +50,7 @@ backup_files() {
 install_packages() {
   [[ -z "$packages" ]] && return 0
 
-  local packages=(
+  local packages_array=(
     htop
     zsh
     tig
@@ -63,17 +63,17 @@ install_packages() {
     zsh-syntax-highlighting
   )
 
-  info_message "Installing programs"
+  info_message "Installing packages"
   if [[ "$(uname)" == "Linux" ]]; then
     if [[ $(command -v "apt") ]]; then
       sudo apt update >/dev/null
-      sudo apt install -y "${packages[@]}"
+      sudo apt install -y "${packages_array[@]}"
     elif [[ $(command -v "dnf") ]]; then
       sudo dnf check-update >/dev/null
-      sudo dnf install "${packages[@]}"
+      sudo dnf install "${packages_array[@]}"
     fi
   else
-    error_message "No known way of installing programs"
+    error_message "No known way of installing packages"
   fi
 }
 
@@ -87,9 +87,13 @@ switch_git_branch() {
   fi
 }
 
-get_dotfiles_from_git() {
+get_dotfiles() {
   if [[ -d "$install_dir" ]]; then
     info_message "Directory $install_dir already exists."
+    command git -C "$install_dir" rev-parse --is-inside-work-tree 2>/dev/null || {
+      error_message "$install_dir is not a git repo"
+      exit 1
+    }
   else
     mkdir -p "$install_dir"
     info_message "Cloning git repo"
@@ -112,7 +116,7 @@ link_dotfiles() {
 
 install() {
   backup_files
-  get_dotfiles_from_git
+  get_dotfiles
   install_packages
   link_dotfiles
 }
@@ -125,7 +129,7 @@ fi
 while [[ $# -gt 0 ]]; do
   case "$1" in
   -p | --packages)
-    pakcages=1
+    packages=1
     shift
     ;;
   -b | --branch)
