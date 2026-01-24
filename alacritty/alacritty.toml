@@ -1,9 +1,9 @@
 [font] 
 size = 11
-normal = {family = "JetBrains Mono", style = "Regular"}
-bold = {family = "JetBrains Mono", style = "Bold"}
-italic = {family = "JetBrains Mono", style = "Italic"}
-bold_italic = {family = "JetBrains Mono", style = "Bold Italic"}
+normal = { family = "CommitMono Nerd Font", style = "Regular" }
+bold = { style = "Bold" }
+italic = { style = "Italic" }
+bold_italic = { style = "Bold Italic" }
 
 [terminal.shell]
 program = "/bin/zsh"
