@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
 
 name="SETUP.SH"
-github_repo="https://github.com/fcolic89/.dotfiles"
+git_repo="https://github.com/fcolic89/.dotfiles"
 install_dir="$HOME/.dotfiles"
 
 color_yellow='\e[33m'
 color_red='\e[31m'
 nocolor='\e[0m'
+
+usage() {
+  cat <<EOF
+config.sh [OPTIONS]
+
+Options:
+  --packages, -p     -> install additional packages
+  --branch, -b       -> set the name of a branch from which to run the setup script
+  --install, -i      -> set a custom install directory
+  --help, -h         -> print script options
+EOF
+}
 
 info_message() {
   echo -e "$color_yellow[$name]=> $1!$nocolor"
@@ -35,8 +47,10 @@ backup_files() {
   done
 }
 
-install_programs() {
-  local programs=(
+install_packages() {
+  [[ -z "$packages" ]] && return 0
+
+  local packages=(
     htop
     zsh
     tig
@@ -50,13 +64,13 @@ install_programs() {
   )
 
   info_message "Installing programs"
-  if [ "$(uname)" == "Linux" ]; then
-    if [ $(command -v "apt") ]; then
+  if [[ "$(uname)" == "Linux" ]]; then
+    if [[ $(command -v "apt") ]]; then
       sudo apt update >/dev/null
-      sudo apt install -y "${programs[@]}"
-    elif [ $(command -v "dnf") ]; then
+      sudo apt install -y "${packages[@]}"
+    elif [[ $(command -v "dnf") ]]; then
       sudo dnf check-update >/dev/null
-      sudo dnf install "${programs[@]}"
+      sudo dnf install "${packages[@]}"
     fi
   else
     error_message "No known way of installing programs"
@@ -64,29 +78,27 @@ install_programs() {
 }
 
 switch_git_branch() {
-  if [ -z "$github_branch" ]; then
-    return 0
-  fi
+  [[ -z "$git_branch" ]] && return 0
 
-  command git -C "$install_dir" fetch origin "$github_branch" 2>/dev/null
-  if [ $(command git -C "$install_dir" branch -a | command grep -q "$github_branch") ] 2>/dev/null; then
-    info_message "Switching to branch $github_branch"
-    command git -C "$install_dir" switch "$github_branch"
+  command git -C "$install_dir" fetch origin "$git_branch" 2>/dev/null
+  if [[ $(command git -C "$install_dir" branch -a | command grep -q "$git_branch") ]] 2>/dev/null; then
+    info_message "Switching to branch $git_branch"
+    command git -C "$install_dir" switch "$git_branch"
   fi
 }
 
 get_dotfiles_from_git() {
-  if [ -d "$install_dir" ]; then
-    error_message "Directory $install_dir already exists."
-    exit 1
+  if [[ -d "$install_dir" ]]; then
+    info_message "Directory $install_dir already exists."
+  else
+    mkdir -p "$install_dir"
+    info_message "Cloning git repo"
+    command git clone "$git_repo" "$install_dir" || {
+      error_message "Failed to clone repo! Better luck next time."
+      exit 1
+    }
   fi
 
-  mkdir -p "$install_dir"
-  info_message "Cloning git repo"
-  command git clone "$github_repo" "$install_dir" || {
-    error_message "Failed to clone repo! Better luck next time."
-    exit 1
-  }
   switch_git_branch
 }
 
@@ -99,14 +111,45 @@ link_dotfiles() {
 }
 
 install() {
-  if [ ! $(command -v "git") ] || [ ! $(command -v "curl") ]; then
-    error_message "Failed to start setup script. Git and curl need to be installed!"
-    exit
-  fi
   backup_files
   get_dotfiles_from_git
-  install_programs
+  install_packages
   link_dotfiles
 }
+
+if [[ ! $(command -v "git") ]] || [[ ! $(command -v "curl") ]]; then
+  error_message "Failed to start setup script. Git and curl need to be installed!"
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -p | --packages)
+    pakcages=1
+    shift
+    ;;
+  -b | --branch)
+    git_branch="$2"
+    shift 2
+    ;;
+  -i | --install)
+    install_dir="$2"
+    shift 2
+    ;;
+  -h | --help)
+    usage
+    shift
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    error_message "Entered an invalid option: $1"
+    usage
+    exit 1
+    ;;
+  esac
+done
 
 install
