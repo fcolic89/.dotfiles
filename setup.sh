@@ -89,7 +89,7 @@ switch_git_branch() {
 
 get_dotfiles() {
   if [[ -d "$install_dir" ]]; then
-    info_message "Directory $install_dir already exists."
+    info_message "Directory $install_dir already exists"
     command git -C "$install_dir" rev-parse --is-inside-work-tree 2>/dev/null || {
       error_message "$install_dir is not a git repo"
       exit 1
@@ -98,7 +98,7 @@ get_dotfiles() {
     mkdir -p "$install_dir"
     info_message "Cloning git repo"
     command git clone "$git_repo" "$install_dir" || {
-      error_message "Failed to clone repo! Better luck next time."
+      error_message "Failed to clone repo! Better luck next time"
       exit 1
     }
   fi
@@ -122,7 +122,7 @@ install() {
 }
 
 if [[ ! $(command -v "git") ]] || [[ ! $(command -v "curl") ]]; then
-  error_message "Failed to start setup script. Git and curl need to be installed!"
+  error_message "Failed to start setup script. Git and curl need to be installed"
   exit 1
 fi
 
@@ -142,7 +142,7 @@ while [[ $# -gt 0 ]]; do
     ;;
   -h | --help)
     usage
-    shift
+    exit 0
     ;;
   --)
     shift
