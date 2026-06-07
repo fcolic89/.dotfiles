@@ -8,11 +8,15 @@
 ```sh
 curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | bash
 ```
-### Install dotfiles without installing additional programs
+### Install dotfiles with additional packages
 ```sh
-curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | PROGRAMS=0 bash
+curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | bash -s -- --packages
 ```
 ### Install dotfiles from a different branch
 ```sh
-curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | GITHUB_BRANCH=example bash
+curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | bash -s -- --branch example
+```
+### Install dotfiles from a custom directory
+```sh
+curl -o- https://raw.githubusercontent.com/fcolic89/.dotfiles/main/setup.sh | bash -s -- --install ~/custom/path
 ```
