@@ -3,13 +3,14 @@ export DOTFILES="$HOME/.dotfiles"
 
 autoload -U colors && colors
 
-# Load mise
-[ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
-
-source $DOTFILES/misc/ssh-agent.sh
 source $DOTFILES/themes/attempt.zsh-theme
 
-if [ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+# Load mise
+[[ -f "$HOME/.local/bin/mise" ]] && eval "$($HOME/.local/bin/mise activate zsh)"
+# Load custom stuff
+[[ -f "$HOME/.custom.zsh" ]] && source "$HOME/.custom.zsh"
+
+if [[ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
