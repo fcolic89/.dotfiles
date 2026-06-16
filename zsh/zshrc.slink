@@ -5,6 +5,12 @@ autoload -U colors && colors
 
 source $DOTFILES/themes/attempt.zsh-theme
 
+# Source .zsh files
+for src in $(find -H "$DOTFILES" -maxdepth 2 -name "*.zsh")
+do
+  source $src 2> /dev/null
+done
+
 # Load mise
 [[ -f "$HOME/.local/bin/mise" ]] && eval "$($HOME/.local/bin/mise activate zsh)"
 # Load custom stuff
@@ -13,12 +19,6 @@ source $DOTFILES/themes/attempt.zsh-theme
 if [[ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-
-# Source .zsh files
-for src in $(find -H "$DOTFILES" -maxdepth 2 -name "*.zsh")
-do
-  source $src 2> /dev/null
-done
 
 # Enable case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
