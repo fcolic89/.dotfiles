@@ -35,6 +35,7 @@ nnoremap <leader>f :b
 nnoremap <leader>c :bdelete<CR> 
 nnoremap <Esc>n :bnext<CR>
 nnoremap <Esc>p :bprev<CR>
+nnoremap <leader><leader> <C-^>
 
 " tabs
 " if <bar> is not working try |
