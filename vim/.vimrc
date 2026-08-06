@@ -31,17 +31,10 @@ nnoremap <leader>Q :q!<CR>
 " buffers
 nnoremap <leader>e :Ex<CR>
 nnoremap <leader>k :ls<CR>
-nnoremap <leader>f :b 
+nnoremap <leader>f :e **/*
+nnoremap <leader>p :b
 nnoremap <leader>c :bdelete<CR> 
-nnoremap <Esc>n :bnext<CR>
-nnoremap <Esc>p :bprev<CR>
 nnoremap <leader><leader> <C-^>
-
-" tabs
-" if <bar> is not working try |
-nnoremap <leader>E :tabnew <bar> Ex<CR>
-nnoremap <leader>] :tabnext<CR>
-nnoremap <leader>[ :tabprevious<CR>
 
 nnoremap <C-h>  <C-w>h
 nnoremap <C-j>  <C-w>j
@@ -51,3 +44,26 @@ nnoremap <C-l>  <C-w>l
 inoremap <C-f> <Esc>
 nnoremap <C-f> <Esc>
 vnoremap <C-f> <Esc>
+
+nnoremap <silent> <leader>l :call SearchInFiles()<CR>
+
+if executable('rg')
+   set grepprg=rg\ --vimgrep\ --smart-case
+   set grepformat=%f:%l:%c:%m
+endif
+
+function! SearchInFiles()
+   let l:pattern = input('Grep: ')
+   if empty(l:pattern)
+       return
+   endif
+
+   if executable('rg')
+     execute 'silent grep! ' . shellescape(l:pattern)
+   else
+     execute 'vimgrep /' . escape(l:pattern, '/\') . '/gj **/*'
+   endif
+
+   copen
+endfunction
+
