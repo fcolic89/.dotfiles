@@ -21,6 +21,7 @@ alias e="nvim"
 alias ee="subl"
 alias af="alias | grep"
 alias cdot="cd ~/.dotfiles"
+alias reload="source $HOME/.zshrc"
 
 alias ls='ls --color=tty'
 alias ll='ls -lh --color=tty'
